@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Hotstar Ad Muter",
+  "version": "1.0",
+  "description": "Mutes Hotstar tab during ads and unmutes it when the match continues.",
+  "icons": {
+    "16": "icon.png"
+  },
+  "permissions": ["tabs", "activeTab", "webNavigation"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.hotstar.com/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
