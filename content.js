@@ -1,4 +1,4 @@
-const AD_DIV_SELECTOR = "_1GyF_i9b6_XmG3IxgNlj4H";
+const AD_DIV_SELECTOR = "oMSW6l4Y23kO6ZaD67dCu";
 
 const checkForAds = () => {
     let isAdRunning = false;

@@ -6,10 +6,23 @@
   "icons": {
     "16": "icon.png"
   },
-  "permissions": ["tabs", "activeTab", "webNavigation"],
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "webNavigation",
+    "webRequest",
+    "webRequestBlocking",
+    "notifications",
+    "storage",
+    "activeTab"
+  ],
   "background": {
     "service_worker": "background.js"
   },
+  "host_permissions": [
+    "https://hf-apix.hotstar.com/*",
+    "https://service.hotstar.com/*"
+  ],
   "content_scripts": [
     {
       "matches": ["*://*.hotstar.com/*"],
