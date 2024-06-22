@@ -1,7 +1,7 @@
-let previousIsVideoBlock = false;
+let isAdShowing = false;
 let lastVideoRequestTime = 0;
 let lastAdRequestTime = 0;
-const interval = 4000; // 4 seconds interval to prevent rapid state changes
+const interval = 4000;
 
 function printTime() {
     const now = new Date();
@@ -12,6 +12,9 @@ function printTime() {
 chrome.webRequest.onBeforeRequest.addListener(
     function (details) {
         if (details.url.includes("https://hf-apix.hotstar.com")) {
+            isAdShowing = false;
+            console.log("isAdShowing is set to false | ID: " + details.requestId);
+
             const currentTime = Date.now();
             if (currentTime - lastVideoRequestTime < interval) return;
             lastVideoRequestTime = currentTime;
@@ -22,14 +25,14 @@ chrome.webRequest.onBeforeRequest.addListener(
                 if (chrome.runtime.lastError) {
                     console.error(chrome.runtime.lastError);
                 } else {
-                    console.log("previousIsVideoBlock before checking: ", previousIsVideoBlock);
-                    if (tab.mutedInfo && tab.mutedInfo.muted && previousIsVideoBlock) {
-                        chrome.tabs.update(details.tabId, { muted: false }, function () {
-                            console.log("Tab unmuted: " + printTime() + " | ID: " + details.requestId);
-                        });
-                    }
-                    previousIsVideoBlock = true;
-                    console.log("previousIsVideoBlock set to true | ID: " + details.requestId);
+                    console.log("isAdShowing before checking: ", isAdShowing);
+                    setTimeout(() => {
+                        if (tab.mutedInfo && tab.mutedInfo.muted && !isAdShowing) {
+                            chrome.tabs.update(details.tabId, { muted: false }, function () {
+                                console.log("Tab unmuted: " + printTime() + " | ID: " + details.requestId);
+                            });
+                        }
+                    }, 12000)
                 }
             });
         }
@@ -44,9 +47,9 @@ chrome.webRequest.onResponseStarted.addListener(
             if (currentTime - lastAdRequestTime < interval) return;
             lastAdRequestTime = currentTime;
 
-            previousIsVideoBlock = false;
+            isAdShowing = true;
             console.log("Ad request intercepted: " + printTime() + " | ID: " + details.requestId);
-            console.log("previousIsVideoBlock set to false | ID: " + details.requestId);
+            console.log("isAdShowing set to true | ID: " + details.requestId);
 
             setTimeout(() => {
                 chrome.tabs.get(details.tabId, function (tab) {
@@ -58,7 +61,7 @@ chrome.webRequest.onResponseStarted.addListener(
                         });
                     }
                 });
-            }, 8000); // Adjust the delay as needed
+            }, 10000); // Adjust the delay as needed
         }
     },
     { urls: ["<all_urls>"] }
