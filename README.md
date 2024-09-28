@@ -9,4 +9,4 @@ A browser extension to automatically mute the Hotstar tab during ads and unmute 
 3. Go to the extensions page of the browser by using this url. [chrome://extensions/]
 4. Just drag and drop the unzipped folder in the extensions page.
 
-## background.js is obfuscated to hide logic
+- **background.js is obfuscated to hide logic**
