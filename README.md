@@ -1,5 +1,7 @@
 # Hotstar Ad Muter
-Mutes Hotstar tab during ads and unmutes it when the match continues.
+A browser extension to automatically mute the Hotstar tab during ads and unmute when live matches resume, enhancing user experience.
+
+⚠️ **Note:** This extension might not work currently due to potential changes in Hotstar's web player or advertisement detection mechanisms.
 
 ## Steps to install
 1. You need to download the zip file from this link: https://github.com/sohail300/Hotstar-Ad-Muter/archive/refs/heads/main.zip
